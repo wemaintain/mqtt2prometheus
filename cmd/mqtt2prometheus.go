@@ -108,7 +108,7 @@ func main() {
 	mqttClientOptions.SetOnConnectHandler(ingest.OnConnectHandler)
 	mqttClientOptions.SetConnectionLostHandler(ingest.ConnectionLostHandler)
 	errorChan := make(chan error, 1)
-
+	errorCount := 0
 	for {
 		err = mqttclient.Subscribe(mqttClientOptions, mqttclient.SubscribeOptions{
 			Topic:             cfg.MQTT.TopicPath,
@@ -121,6 +121,11 @@ func main() {
 			break
 		}
 		logger.Warn("could not connect to mqtt broker %s, sleep 10 second", zap.Error(err))
+		errorCount++
+		if errorCount == 5 {
+			logger.Fatal("Could not connect to mqtt after 5 retry", zap.Error(err))
+			os.Exit(1)
+		}
 		time.Sleep(10 * time.Second)
 	}
 

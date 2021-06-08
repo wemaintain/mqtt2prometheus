@@ -3,8 +3,10 @@ module github.com/hikhvar/mqtt2prometheus
 go 1.14
 
 require (
+	github.com/aws/aws-sdk-go v1.27.0
 	github.com/eclipse/paho.mqtt.golang v1.1.1
 	github.com/go-kit/kit v0.10.0
+	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/prometheus/client_golang v1.7.1
 	github.com/prometheus/exporter-toolkit v0.5.1
